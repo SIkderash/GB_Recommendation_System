@@ -41,11 +41,13 @@ def train(request):
 @csrf_exempt
 def recommend(request):
     if request.method=='POST':                                  
-        users_data=JSONParser().parse(request)
+        data=JSONParser().parse(request)
 
-        target_user = users_data['id']
 
-        dataset = load_csv_as_array_without_row_index_and_column_headers('dataset.csv')
+        target_user = data['id']
+        file_path = data["file_path"]
+
+        dataset = load_csv_as_array_without_row_index_and_column_headers(file_path)
         user_similarity = load_csv_as_array('user_similarity.csv')
 
         # Find the most similar users to the target user
